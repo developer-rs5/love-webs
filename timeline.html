@@ -79,6 +79,41 @@
       color: #e91e63;
       font-weight: 500;
     }
+    /* Button pulse animation */
+@keyframes pulseButton {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 8px #ff80ab;
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #ff4081;
+  }
+}
+
+#moreBtn {
+  animation: pulseButton 1.8s infinite;
+  display: none; /* show only after typing */
+}
+
+/* Typing animation */
+#mainMessage {
+  border-right: 2px solid #ff4081;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing 2.5s steps(40, end) forwards, blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink {
+  50% { border-color: transparent }
+}
+
 
     button {
       background-color: #ff4081;
@@ -180,6 +215,9 @@
 </audio>
 
   <script>
+
+
+
     // Falling hearts
     const heartContainer = document.getElementById("hearts");
     function createHeart() {
@@ -222,7 +260,7 @@
 
     const todayMessage = messages[current - 1] || { main: "I’m still here, waiting. ❤️", more: "Click back to Day 1 and read the whole journey again 🥹" };
     document.getElementById("dayTitle").innerText = `Day ${current}`;
-    document.getElementById("mainMessage").innerText = todayMessage.main;
+
     document.getElementById("moreMessage").innerText = todayMessage.more;
 
     function showMore() {
@@ -290,6 +328,28 @@ function tryPlayMusic() {
     }
   }
 }
+
+    const mainMsgEl = document.getElementById("mainMessage");
+const moreBtn = document.getElementById("moreBtn");
+
+// Use typing effect with setTimeout
+function typeMessage(text, callback) {
+  mainMsgEl.innerText = "";
+  mainMsgEl.style.width = "0";
+  mainMsgEl.style.animation = "none"; // reset
+  void mainMsgEl.offsetWidth; // trigger reflow
+  mainMsgEl.textContent = text;
+  mainMsgEl.style.animation = "typing 2.5s steps(40, end) forwards, blink 0.75s step-end infinite";
+  
+  setTimeout(() => {
+    callback(); // after typing done
+  }, 2600); // match duration
+}
+
+// Call on load:
+typeMessage(todayMessage.main, () => {
+  moreBtn.style.display = "inline-block"; // show after typing
+});
 
 // Listen for any tap, click, or scroll
 document.addEventListener("click", tryPlayMusic);
