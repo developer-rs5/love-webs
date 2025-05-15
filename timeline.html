@@ -173,8 +173,10 @@
     <button id="moreBtn" onclick="showMore()">More 💕</button>
   </div>
 
-  <audio id="music" autoplay loop>
+  <<audio id="music" loop>
   <source src="romantic-song.mp3" type="audio/mpeg" />
+</audio>
+
 </audio>
 
   <script>
@@ -270,6 +272,30 @@
     }
 
     animateFireworks();
+
+    let hasPlayed = false;
+function tryPlayMusic() {
+  if (!hasPlayed) {
+    const music = document.getElementById("music");
+    const playPromise = music.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          hasPlayed = true;
+          console.log("Music playing 🎵");
+        })
+        .catch((err) => {
+          console.log("User gesture required to play music", err);
+        });
+    }
+  }
+}
+
+// Listen for any tap, click, or scroll
+document.addEventListener("click", tryPlayMusic);
+document.addEventListener("touchstart", tryPlayMusic);
+document.addEventListener("scroll", tryPlayMusic);
+
   </script>
 </body>
 </html>
