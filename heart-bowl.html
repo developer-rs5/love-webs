@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rishabh ❤️ Samya - Heart Fill</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0d0b1f;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin: 30px 0 10px;
+      font-size: 2em;
+      color: #ff5e8e;
+    }
+
+    .heart-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 40px auto;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .fill-mask {
+      animation: fillAnim 2s ease forwards;
+      transform-box: fill-box;
+      transform-origin: bottom;
+    }
+
+    .falling-heart {
+      position: absolute;
+      color: #ff5e8e;
+      font-size: 10px;
+      animation: fall linear forwards;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10px); opacity: 1; }
+      100% { transform: translateY(200px); opacity: 0; }
+    }
+
+    footer {
+      color: #ff99bb;
+      margin-top: 30px;
+    }
+
+    @media screen and (max-width: 500px) {
+      .heart-container {
+        transform: scale(0.8);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Rishabh ❤️ Samya</h1>
+
+  <div class="heart-container">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <mask id="heart-mask">
+          <rect id="fillRect" x="0" y="100" width="100" height="100" fill="white"/>
+        </mask>
+      </defs>
+      <path id="heartPath"
+        d="M50 91s-36-25-36-50c0-14 11-25 25-25 7 0 13 3 17 9 4-6 10-9 17-9 14 0 25 11 25 25 0 25-36 50-36 50z"
+        fill="#ff5e8e" 
+        mask="url(#heart-mask)" />
+      <path
+        d="M50 91s-36-25-36-50c0-14 11-25 25-25 7 0 13 3 17 9 4-6 10-9 17-9 14 0 25 11 25 25 0 25-36 50-36 50z"
+        fill="none"
+        stroke="#fff"
+        stroke-width="2"
+      />
+    </svg>
+  </div>
+
+  <footer>
+    Slowly filling up with love... 100% on May 25, 2025 @ 8:51 PM 💖
+  </footer>
+
+  <script>
+    const start = new Date("2025-05-15T00:00:00");
+    const end = new Date("2025-05-25T20:51:00");
+    const now = new Date();
+    const percent = Math.max(0, Math.min(100, 40 + ((now - start) / (end - start)) * 60));
+
+    const fillHeight = 100 - percent; // SVG origin is top-left
+    document.getElementById("fillRect").setAttribute("y", fillHeight);
+    document.getElementById("fillRect").setAttribute("height", percent);
+
+    // Falling hearts effect
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "falling-heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 90 + "%";
+      heart.style.top = "0px";
+      heart.style.fontSize = (8 + Math.random() * 8) + "px";
+      heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }, 300);
+  </script>
+</body>
+</html>
