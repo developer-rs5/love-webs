@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rishabh ❤️ Samya</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 1rem;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #ffe6f0, #fff0f5);
+      overflow: hidden;
+      text-align: center;
+      color: #ff4081;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .names {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #d81b60;
+    }
+
+    .heart {
+      font-size: 2rem;
+      animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    .progress-container {
+      margin: 2rem auto;
+      max-width: 90%;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background: #ffc1e3;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: inset 0 0 10px #fff;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(to right, #ff69b4, #ff1493);
+      transition: width 1s ease;
+      border-radius: 10px;
+    }
+
+    .day-label {
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+
+    .message-box {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      margin: 1rem auto;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(255, 64, 129, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .more {
+      margin-top: 1rem;
+      display: none;
+      color: #e91e63;
+      font-weight: 500;
+    }
+
+    button {
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      position: relative;
+      z-index: 3;
+    }
+
+    button:hover {
+      background-color: #e91e63;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart-fall {
+      position: absolute;
+      color: pink;
+      animation: fall 8s linear infinite;
+      font-size: 1.2rem;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10%);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    #musicBtn {
+      background: #ff80ab;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      border-radius: 1rem;
+      border: none;
+      color: white;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+  <canvas id="fireworks"></canvas>
+
+  <h1>💕 Love Timeline 💕</h1>
+  <div class="names">Rishabh ❤️ Samya</div>
+  <div class="heart">💖</div>
+
+  <div class="progress-container">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="day-label" id="dayLabel">Day X of 14</div>
+  </div>
+
+  <div class="message-box" id="messageBox">
+    <h2 id="dayTitle">Day X</h2>
+    <p id="mainMessage">Loading...</p>
+    <div class="more" id="moreMessage"></div>
+    <button id="moreBtn" onclick="showMore()">More 💕</button>
+  </div>
+
+  <audio id="music" autoplay loop>
+  <source src="romantic-song.mp3" type="audio/mpeg" />
+</audio>
+
+  <script>
+    // Falling hearts
+    const heartContainer = document.getElementById("hearts");
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart-fall";
+      heart.innerText = "💗";
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.fontSize = `${Math.random() * 1 + 1}rem`;
+      heart.style.animationDuration = `${Math.random() * 4 + 6}s`;
+      heartContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
+    }
+    setInterval(createHeart, 800); // slower heart spawn rate
+
+    // Timeline
+    const startDate = new Date("2025-05-11T20:51:00");
+    const today = new Date();
+    const diffDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+    const messages = [
+      { main: "The first ‘hi’ from you felt like fireworks in my heart 🎇", more: "It was just a ‘hello’, but my heart heard a melody 💞" },
+      { main: "I’ve only known you a day, but you already feel like home 🏡💕", more: "I don’t know how, but you’ve made every moment warmer 💫" },
+      { main: "Your smile is my new addiction 😍 I could look at it forever.", more: "Seriously, I need a warning label: *'Too cute to handle!'* 💘" },
+      { main: "You’re like the sun—bright, warm, and impossible to ignore ☀️", more: "But also soft like moonlight when I need calm 🌙💕" },
+      { main: "Every message from you = 10x more butterflies 🦋", more: "Are you secretly a magician? Because you’ve enchanted me 🪄💖" },
+      { main: "I never believed in fate until you smiled at me 😌", more: "Now I’m writing code just to tell you you’re perfect 💻❤️" },
+      { main: "One week! And I already want forever with you 💞", more: "You’re not just someone—I think you’re *the* one 💍" },
+      { main: "Even coffee can’t compete with the energy your name gives me ☕💕", more: "You’re my daily boost and sweetest habit 🌸" },
+      { main: "You’re my favorite notification 💬❤️", more: "Every time it’s you, my heart skips a beat 📱💘" },
+      { main: "You’ve painted my days pink with your vibes 🌈💓", more: "Like cotton candy in soul form—sweet, soft, magical ☁️" },
+      { main: "If hearts could text, mine would be spamming yours nonstop 💌", more: "With emojis only you could understand 😚❤️🔥✨" },
+      { main: "I’m not counting days... I’m counting heartbeats 💗", more: "And every single one whispers your name 💕" },
+      { main: "You’re the 'wow' in my every day ✨", more: "And the smile I didn’t know I needed 🥹" },
+      { main: "It’s been 2 weeks... and I’m still falling 🎢❤️", more: "So... ready to say yes? 😳💍" }
+    ];
+
+    const current = Math.min(diffDays, 14);
+    document.getElementById("progressFill").style.width = `${(current / 14) * 100}%`;
+    document.getElementById("dayLabel").innerText = `Day ${current} of 14`;
+
+    const todayMessage = messages[current - 1] || { main: "I’m still here, waiting. ❤️", more: "Click back to Day 1 and read the whole journey again 🥹" };
+    document.getElementById("dayTitle").innerText = `Day ${current}`;
+    document.getElementById("mainMessage").innerText = todayMessage.main;
+    document.getElementById("moreMessage").innerText = todayMessage.more;
+
+    function showMore() {
+      document.getElementById("moreMessage").style.display = "block";
+      document.getElementById("moreBtn").style.display = "none"; // Hide after click
+      launchFireworks();
+    }
+
+    // Fireworks
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function launchFireworks() {
+      const count = 80;
+      const x = window.innerWidth / 2;
+      const y = window.innerHeight / 2;
+
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = Math.random() * 6 + 2;
+        particles.push({
+          x, y,
+          dx: Math.cos(angle) * speed,
+          dy: Math.sin(angle) * speed,
+          life: 100,
+          color: `hsl(${Math.random() * 360}, 100%, 70%)`
+        });
+      }
+    }
+
+    function animateFireworks() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.dx;
+        p.y += p.dy;
+        p.life -= 1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        if (p.life <= 0) particles.splice(i, 1);
+      });
+      requestAnimationFrame(animateFireworks);
+    }
+
+    animateFireworks();
+  </script>
+</body>
+</html>
