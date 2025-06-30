@@ -192,8 +192,8 @@ function calculateLove() {
   const resultBox = document.getElementById("loveResult");
   const specialNames = ["rishabh", "rishabh sharma", "samya", "samya magar"];
 
-  const leftValid = name1 === "rishabh" || name1 === "samya";
-  const rightValid = (name2 === "rishabh" || name2 === "samya") && name1 !== name2;
+  const leftValid = name1 === "rishabh" || name1 === "samya" || name1 === "sanjay" || name1 === "riya";
+  const rightValid = (name2 === "rishabh" || name2 === "samya" || name2 === "sanjay" || name2 === "riya") && name1 !== name2;
 
   if (leftValid && rightValid) {
     const score = 99990 + Math.floor(Math.random() * 10);
