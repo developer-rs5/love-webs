@@ -932,6 +932,7 @@ function playMusic() {
     });
                 
                 celebrateBtn.addEventListener('click', () => {
+                    playMusic();
                     // Add click effect
                     gsap.to(celebrateBtn, {
                         scale: 0.95,
@@ -956,4 +957,5 @@ function playMusic() {
 </body>
 
 </html>
+
 
