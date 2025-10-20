@@ -268,6 +268,7 @@
         <button class="celebrate-button" id="celebrateBtn">Celebrate </button>
         <button class="next-page-butto" id="nextPageBtn"></button>
     </div>
+    <audio id="bgMusic" src="tum-sai.mp3" loop></audio>
 
     <script>
         // Canvas elements
@@ -278,7 +279,31 @@
         const petalsCanvas = document.getElementById('petalsCanvas');
         const petalsCtx = petalsCanvas.getContext('2d');
         const heartsContainer = document.getElementById('heartsContainer');
-
+        window.addEventListener('load', () => {
+  const music = document.getElementById('bgMusic');
+  music.autoplay = true;
+  music.muted = true;
+  music.play().then(() => {
+    setTimeout(() => {
+      music.muted = false;
+      console.log("🎶 Music started, papa Rishabh’s vibe check passed!");
+    }, 500);
+  }).catch(() => {
+    console.log("😤 Browser blocked autoplay, needs user interaction!");
+  });
+});
+function playMusic() {
+  const music = document.getElementById('bgMusic');
+  music.autoplay = true;
+  music.muted = true;
+  music.play().then(() => {
+    setTimeout(() => {
+      music.muted = false;
+    }, 500);
+  }).catch(() => {
+    console.log("Autoplay blocked 😤 — user needs to click something!");
+  });
+}
         // Set canvas size
         function resizeCanvas() {
             starCanvas.width = window.innerWidth;
@@ -819,7 +844,7 @@
                 birthdayText.appendChild(letter);
             }
             
-            // Start text animation after 3 seconds
+            // Start text  after 3 seconds
             setTimeout(() => {
                 birthdayText.style.opacity = 1;
                 
@@ -931,3 +956,4 @@
 </body>
 
 </html>
+
