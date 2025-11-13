@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tum Sai — Aanya (Surprise)</title>
+  <meta name="description" content="A small pink Kolkata surprise page — I love you Aanya." />
+  <style>
+    /* ---------- theme ---------- */
+    :root{
+      --pink-1: #ffedf4;
+      --pink-2: #ffd6e6;
+      --accent: #ff4d8b;
+      --deep: #3a0036;
+      --glass: rgba(255,255,255,0.6);
+    }
+    /* ---------- base ---------- */
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family: 'Poppins', 'Noto Sans', system-ui, -apple-system, sans-serif;background:linear-gradient(160deg,var(--pink-1),var(--pink-2));color:var(--deep);-webkit-font-smoothing:antialiased}
+    a{color:inherit}
+    .container{max-width:980px;margin:28px auto;padding:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,248,250,0.85));border-radius:16px;padding:18px;box-shadow:0 18px 50px rgba(200,70,120,0.08);overflow:hidden}
+
+    /* ---------- header (component) ---------- */
+    .header{display:flex;gap:14px;align-items:center}
+    .logo{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#ff9ac1);color:white;font-weight:800;font-size:22px}
+    h1{margin:0;font-size:20px}
+    .sub{margin:6px 0 0;color:#6b466e;font-size:14px}
+
+    /* ---------- layout ---------- */
+    .layout{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:16px}
+    @media(max-width:900px){.layout{grid-template-columns:1fr} .right{order:2}}
+
+    /* ---------- scene (component) ---------- */
+    .scene{
+      height:380px;border-radius:12px;position:relative;overflow:hidden;border:1px solid rgba(255,0,120,0.05);
+      display:flex;align-items:center;justify-content:center;background:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.6), transparent 8%),
+        linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,230,245,0.6));
+    }
+    /* floating hearts */
+    .floater{position:absolute;pointer-events:none;opacity:0;animation:floatUp 6s linear infinite}
+    @keyframes floatUp{
+      0%{transform:translateY(0) scale(.8);opacity:0}
+      10%{opacity:1}
+      100%{transform:translateY(-260px) scale(1.12);opacity:0}
+    }
+    .floater.f1{left:12%;bottom:18%;animation-delay:0s}
+    .floater.f2{left:40%;bottom:14%;animation-delay:2s}
+    .floater.f3{left:70%;bottom:20%;animation-delay:4s}
+    /* paper boat */
+    .boat{z-index:6;cursor:pointer;transition:transform .25s ease;display:flex;align-items:center;gap:10px}
+    .boat:hover{transform:translateY(-8px) rotate(-3deg) scale(1.02)}
+    .boat svg{filter:drop-shadow(0 8px 18px rgba(170,60,110,0.08))}
+
+    /* Howrah-style silhouette */
+    .bridge{position:absolute;left:0;right:0;bottom:0;height:90px;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
+    .bridge svg{opacity:0.22;transform:translateY(8px);width:120%;height:110px;fill:#8b4a6b}
+
+    /* ---------- right column (message + controls) ---------- */
+    .right{display:flex;flex-direction:column;gap:12px}
+    .msgCard{background:linear-gradient(180deg, #fff,#fff7fb);padding:14px;border-radius:12px;border:1px solid rgba(255,0,120,0.04)}
+    .teaser{font-size:15px;color:var(--deep);line-height:1.55;min-height:86px}
+    .meta{font-size:13px;color:#6b466e;margin-top:8px}
+
+    /* buttons */
+    .controls{display:flex;gap:10px;margin-top:10px}
+    .btn{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 10px 24px rgba(255,80,150,0.08)}
+    .btn.ghost{background:transparent;color:var(--deep);border:1px solid rgba(59,0,62,0.06)}
+
+    /* ---------- surprise (component) ---------- */
+    .surpriseWrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(0deg, rgba(10,3,10,0.6), rgba(10,3,10,0.6));z-index:80;opacity:0;pointer-events:none;transition:opacity .36s ease}
+    .surpriseWrap.show{opacity:1;pointer-events:auto}
+    .surpriseCard{background:linear-gradient(180deg,#ffecf4,#fff0f9);border-radius:18px;padding:28px 30px;text-align:center;min-width:300px;box-shadow:0 30px 80px rgba(170,60,110,0.14);border:1px solid rgba(255,80,150,0.06)}
+    .surpriseText{font-size:36px;font-weight:900;color:#560033;letter-spacing:1px;display:flex;align-items:center;justify-content:center;gap:12px}
+    .heartPulse{display:inline-block;font-size:30px;color:var(--accent);filter:drop-shadow(0 8px 18px rgba(255,80,150,0.12));transform-origin:center}
+
+    /* heartbeat animation */
+    @keyframes heartbeat {
+      0% { transform: scale(1); opacity:1;}
+      25% { transform: scale(1.12); }
+      45% { transform: scale(0.96); opacity:0.9;}
+      100% { transform: scale(1); opacity:1;}
+    }
+    .heartPulse.animate { animation: heartbeat 1s ease-in-out infinite; }
+
+    #nameText{
+      font-size:28px;
+      font-weight:900;
+      background:linear-gradient(90deg,var(--accent),#ff99b8);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .surpriseSub{color:#6b466e;margin-top:8px;font-size:14px}
+    .closeSmall{margin-top:14px;background:transparent;border:1px solid rgba(59,0,62,0.06);padding:8px 12px;border-radius:10px;cursor:pointer;color:var(--deep);font-weight:700}
+
+    /* ---------- tap overlay ---------- */
+    .tapOverlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:90;background:rgba(255,255,255,0.05);backdrop-filter:blur(3px);}
+    .tapCard{background:white;padding:18px;border-radius:12px;text-align:center;box-shadow:0 18px 50px rgba(200,70,120,0.08)}
+    .playBtn{margin-top:10px;padding:12px 20px;border-radius:12px;background:var(--accent);color:white;font-weight:800;border:none;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <!-- Header -->
+      <div class="header">
+        <div class="logo">T❤S</div>
+        <div>
+          <h1>Tum Sai — Aanya (Kolkata Special)</h1>
+          <div class="sub">Soft pink • Kolkata vibe • Boat reveal • Infinite surprise ❤️</div>
+        </div>
+      </div>
+
+      <div class="layout">
+        <!-- Left scene -->
+        <div class="scene">
+          <div class="floater f1">💗</div>
+          <div class="floater f2">💕</div>
+          <div class="floater f3">💞</div>
+
+          <div class="boat" id="boat">
+            <svg width="150" viewBox="0 0 64 64">
+              <path d="M2 46 L32 34 L62 46 L38 52 L32 40 L26 52 Z" fill="#fff" stroke="#ff6aa1" stroke-width="1.6"/>
+              <path d="M32 34 L32 6" stroke="#ff6aa1" stroke-width="1.6"/>
+              <circle cx="32" cy="10" r="2.6" fill="#ff6aa1"/>
+            </svg>
+            <div style="font-weight:700;color:#560033">Click the boat</div>
+          </div>
+
+          <div class="bridge">
+            <svg viewBox="0 0 100 20">
+              <path d="M0 14 C10 6 20 6 30 14 C40 22 60 22 70 14 C80 6 90 6 100 14 L100 20 L0 20 Z"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right text -->
+        <div class="right">
+          <div class="msgCard">
+            <div class="teaser" id="teaser">
+              Aanya — Kolkata ki thandi hawa, Howrah Bridge ki light,  
+              aur tumhari choti si smile…  
+              Click the boat to reveal the note & then press <b>Open Surprise</b>.
+            </div>
+            <div class="meta">Soft. Simple. Emotional.</div>
+
+            <div class="controls">
+              <button class="btn" id="openSurpriseBtn">Open Surprise</button>
+              <button class="btn ghost" id="muteBtn">Mute</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Surprise Popup -->
+  <div class="surpriseWrap" id="surprise">
+    <div class="surpriseCard">
+      <div class="surpriseText">
+        <span>I love you</span>
+        <span class="heartPulse" id="heart">❤️</span>
+        <span id="nameText">Aanya 1</span>
+      </div>
+      <div class="surpriseSub">Forever counting… just for you.</div>
+      <button class="closeSmall" id="closeSurprise">Close</button>
+    </div>
+  </div>
+
+  <!-- Tap Overlay -->
+  <div class="tapOverlay" id="tapOverlay">
+    <div class="tapCard">
+      <h3>Tap to Play “Tum Sai”</h3>
+      <p>Music + Surprise together ❤️</p>
+      <button class="playBtn" id="tapPlay">Play</button>
+    </div>
+  </div>
+
+  <audio id="bgAudio" src="tum-sai.mp3" loop playsinline preload="auto"></audio>
+
+  <!-- SCRIPT -->
+  <script>
+    const audio = document.getElementById('bgAudio');
+    const tapOverlay = document.getElementById('tapOverlay');
+    const tapPlay = document.getElementById('tapPlay');
+    const boat = document.getElementById('boat');
+    const teaser = document.getElementById('teaser');
+    const openSurpriseBtn = document.getElementById('openSurpriseBtn');
+    const surprise = document.getElementById('surprise');
+    const closeSurprise = document.getElementById('closeSurprise');
+    const heart = document.getElementById('heart');
+    const nameText = document.getElementById('nameText');
+    const muteBtn = document.getElementById('muteBtn');
+
+    // ---------- INFINITE COUNTER ----------
+    let count = 1;
+    let countInterval = null;
+
+    function startCounter() {
+      if (countInterval) return;
+      countInterval = setInterval(()=>{
+        count++;
+        nameText.textContent = "Aanya " + count;
+      }, 700);
+    }
+
+    // autoplay attempt
+    window.addEventListener('load', async()=>{
+      try{ await audio.play(); }
+      catch{ tapOverlay.style.display = "flex"; }
+
+      document.querySelectorAll('.floater').forEach(f=> f.style.opacity="1");
+    });
+
+    tapPlay.addEventListener('click', async()=>{
+      try{ 
+        await audio.play(); 
+        tapOverlay.style.display="none";
+      }catch(e){}
+    });
+
+    // Boat click
+    let boatClicked = false;
+
+    boat.addEventListener('click', ()=>{
+      if(boatClicked) return;
+      boatClicked = true;
+
+      const full = `Aanya, shona — Kolkata ki thandi hawa mein, Howrah Bridge ke pass ek choti si adda ki tasveer thi mere dimag mein.
+Maine tumhe hasane ki koshishen ki — chhoti chhoti cheezen jo shayad tune notice na ki ho.
+Tu trust karne se darte hai, main yeh sab samajhta hoon.
+Phir bhi, main sach mein tumhe dil se pasand karta hoon.
+Jab bhi tum ready ho, mujhe ek mauka dena — main promise karta hoon, nibhaunga.
+— Rishabh`;
+
+      teaser.style.opacity="0";
+      setTimeout(()=>{
+        teaser.textContent="";
+        teaser.style.opacity="1";
+        let i=0;
+        const speed=18;
+        const interval=setInterval(()=>{
+          teaser.textContent+=full.charAt(i);
+          i++;
+          if(i>=full.length) clearInterval(interval);
+        },speed);
+      },260);
+    });
+
+    // Open Surprise
+    openSurpriseBtn.addEventListener('click', ()=>{
+      surprise.classList.add('show');
+      heart.classList.add('animate');
+      startCounter();
+
+      if(audio.paused){
+        audio.play().catch(()=> tapOverlay.style.display="flex");
+      }
+    });
+
+    closeSurprise.addEventListener('click', ()=>{
+      surprise.classList.remove('show');
+      heart.classList.remove('animate');
+    });
+
+    // mute
+    muteBtn.addEventListener('click', ()=>{
+      audio.muted = !audio.muted;
+      muteBtn.textContent = audio.muted ? "Unmute" : "Mute";
+    });
+  </script>
+</body>
+</html>
