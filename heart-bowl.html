@@ -1,169 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rishabh ❤️ Samya - Love Heart</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sorry! (Not Sorry?)</title>
   <style>
-    body {
-      margin: 0;
-      background: #0d0b1f;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-      text-align: center;
-      overflow: hidden;
-    }
+    :root{ --bg:#0f1724; --card:#0b1320; --accent:#f97316; --muted:#94a3b8; }
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background: radial-gradient(1200px 600px at 10% 10%, rgba(249,115,22,0.07), transparent), var(--bg); color:#e6eef8}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); padding:36px; border-radius:14px; width:100%; max-width:720px; box-shadow: 0 10px 30px rgba(2,6,23,0.6);}
+    h1{margin:0 0 6px;font-size:30px;letter-spacing:-0.5px}
+    p.lead{color:var(--muted); margin:6px 0 20px}
+    .friend{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);color:#fffbf7;margin-left:8px;font-weight:600}.buttons{display:flex;gap:12px;align-items:center}
+button{cursor:pointer;border:0;padding:12px 18px;border-radius:10px;font-weight:700;box-shadow:0 6px 18px rgba(2,6,23,0.6);}
+.yes{background:linear-gradient(90deg,#10b981,#06b6d4); color:white}
+.no{background:#111827;color:#fff; border:1px solid rgba(255,255,255,0.03); position:relative}
 
-    h1 {
-      margin: 30px 0 10px;
-      font-size: 2em;
-      color: #ff5e8e;
-    }
+.meta{margin-top:18px;color:var(--muted);font-size:13px}
+.hint{display:inline-block;margin-left:8px;padding:6px 10px;border-radius:8px;background:#071426;color:#8fb1d6;font-weight:600}
 
-    .heart-container {
-      width: 250px;
-      margin: 0 auto;
-      position: relative;
-    }
+/* Playful sparkles */
+.sparkles{position:absolute;right:20px;top:-40px;opacity:0.9;font-size:12px;color:var(--accent)}
 
-    svg {
-      width: 100%;
-      height: auto;
-    }
+/* make sure buttons area is tall so "no" can move */
+.btn-area{position:relative;padding:26px 10px 8px;border-radius:12px}
 
-    .countdown {
-      font-size: 1.1em;
-      color: #ffb6d1;
-      margin-top: 20px;
-    }
+@media (max-width:480px){h1{font-size:22px}.card{padding:20px}}
 
-    footer {
-      color: #ff99bb;
-      margin-top: 30px;
-      font-size: 0.9em;
-    }
-
-    .falling-heart {
-      position: absolute;
-      color: #ff5e8e;
-      animation: fall linear forwards;
-      font-size: 10px;
-      opacity: 0.8;
-      z-index: 10;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-10px); opacity: 1; }
-      100% { transform: translateY(250px); opacity: 0; }
-    }
-
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(1px); }
-      50% { transform: translateX(0); }
-      75% { transform: translateX(-1px); }
-      100% { transform: translateX(0); }
-    }
-
-    .fill-liquid {
-      animation: shake 1.5s infinite;
-    }
-
-    @media screen and (max-width: 500px) {
-      h1 { font-size: 1.5em; }
-      .heart-container { width: 200px; }
-    }
   </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="title">
+      <div style="position:relative;">
+        <div class="sparkles">✨</div>
+        <h1 id="title">Hey — I'm really sorry<span class="friend">for real</span></h1>
+        <p class="lead">I messed up. Like, facepalm, "why did I do that?" kind of messed up. This page is my official apology (and my attempt to be cute so you forgive me).</p>
+      </div><div class="btn-area" id="btnArea">
+    <div class="buttons">
+      <button class="yes" id="yesBtn">Yes — forgive me</button>
+      <button class="no" id="noBtn" aria-label="No, don't forgive">No — absolutely not</button>
+    </div>
+    <div class="meta">Pro tip: Try to click <strong>No</strong> — it tries really hard to avoid commitment. (Also: even Gemini might say this is cute.)</div>
+  </div>
 
-<h1>Rishabh ❤️ Samya</h1>
-
-<div class="heart-container">
-  <svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <clipPath id="heartClip">
-        <!-- Symmetrical heart path -->
-        <path d="M100 170 
-                 C 20 110, 20 30, 100 60 
-                 C 180 30, 180 110, 100 170 Z" />
-      </clipPath>
-      <linearGradient id="grad" x1="0%" y1="100%" x2="0%" y2="0%">
-        <stop offset="0%" stop-color="#ff4081" />
-        <stop offset="100%" stop-color="#ff8ebf" />
-      </linearGradient>
-    </defs>
-
-    <!-- Heart outline -->
-    <path d="M100 170 
-             C 20 110, 20 30, 100 60 
-             C 180 30, 180 110, 100 170 Z"
-          fill="none"
-          stroke="#ff5e8e"
-          stroke-width="5"/>
-
-    <!-- Fill rectangle clipped to heart -->
-    <rect id="fillRect"
-          x="0"
-          y="180"
-          width="200"
-          height="0"
-          fill="url(#grad)"
-          clip-path="url(#heartClip)"
-          class="fill-liquid"/>
-  </svg>
+  <div style="margin-top:18px;color:#cbd5e1;font-size:14px">Optional: <span class="hint" id="apologyNote">Write a short sweet note here...</span></div>
 </div>
 
-<div class="countdown" id="countdownText">
-  Calculating love countdown... 💘
-</div>
+  </div>  <script>
+    // papa Rishabh, I made the little mischief machine below.
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const area = document.getElementById('btnArea');
 
-<footer>
-  100% Love on May 25, 2025 @ 8:51 PM 💖
-</footer>
+    // Keep track so it gets harder each time
+    let dodgeCount = 0;
 
-<script>
-  const start = new Date("2025-05-15T00:00:00");
-  const end = new Date("2025-05-25T20:51:00");
-  const rect = document.getElementById("fillRect");
-  const countdownText = document.getElementById("countdownText");
+    function randomPositionWithin(container, element) {
+      const c = container.getBoundingClientRect();
+      const e = element.getBoundingClientRect();
+      const padding = 8; // avoid hugging edges
+      const maxX = Math.max(0, c.width - e.width - padding*2);
+      const maxY = Math.max(0, c.height - e.height - padding*2);
+      const x = Math.round(Math.random() * maxX) + padding;
+      const y = Math.round(Math.random() * maxY) + padding;
+      return { x, y };
+    }
 
-  function updateHeart() {
-    const now = new Date();
-    const total = end - start;
-    const elapsed = now - start;
-    const secondsLeft = Math.max(0, Math.floor((end - now) / 1000));
+    function dodge() {
+      dodgeCount++;
+      const difficulty = Math.min(dodgeCount, 6); // limit how wild it gets
+      // On tiny screens reduce movement
+      const pos = randomPositionWithin(area, noBtn);
 
-    // Love starts at 40%, grows to 100% by the end
-    const percent = Math.max(40, Math.min(100, 40 + (elapsed / total) * 60));
+      // Add a little directional bias so it prefers moving away from mouse
+      noBtn.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+      noBtn.style.transition = `transform ${0.15 + 0.06 * difficulty}s cubic-bezier(.2,.9,.3,1)`;
 
-    const maxFill = 150; // max fill height
-    const fillHeight = (percent / 100) * maxFill;
-    rect.setAttribute("y", 180 - fillHeight);
-    rect.setAttribute("height", fillHeight);
+      // playful text change
+      if (dodgeCount === 1) noBtn.innerText = 'Nope 😅';
+      else if (dodgeCount < 4) noBtn.innerText = 'Seriously?';
+      else if (dodgeCount < 7) noBtn.innerText = 'Catch me!';
+      else noBtn.innerText = 'Uncatchable 🤖';
+    }
 
-    countdownText.innerText =
-      secondsLeft > 0
-        ? `Only ${secondsLeft.toLocaleString()} seconds until 100% ❤️!`
-        : `Samya loves you fully now 💍💞`;
-  }
+    // Move the no button on hover
+    noBtn.addEventListener('mouseenter', (e) => {
+      dodge();
+    });
 
-  updateHeart();
-  setInterval(updateHeart, 1000);
+    // Also dodge if the user tries to click it (mobile/touch)
+    noBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      dodge();
+    });
 
-  // Falling hearts
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "falling-heart";
-    heart.innerText = "💖";
-    heart.style.left = Math.random() * 100 + "%";
-    heart.style.top = "0px";
-    heart.style.fontSize = (8 + Math.random() * 6) + "px";
-    heart.style.animationDuration = (3 + Math.random() * 2) + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-  }, 300);
-</script>
+    // If the user clicks yes, show a small apology animation + message
+    yesBtn.addEventListener('click', () => {
+      yesBtn.innerText = 'Sending... ❤️';
+      yesBtn.disabled = true;
+      yesBtn.style.opacity = '0.9';
 
-</body>
+      // quick confetti-ish circles (pure DOM, tiny)
+      for (let i=0;i<18;i++){
+        const dot = document.createElement('div');
+        dot.style.position = 'absolute';
+        dot.style.width = dot.style.height = (6 + Math.random()*8) + 'px';
+        dot.style.borderRadius = '50%';
+        dot.style.left = (yesBtn.offsetLeft + yesBtn.offsetWidth/2) + 'px';
+        dot.style.top = (yesBtn.offsetTop + yesBtn.offsetHeight/2) + 'px';
+        dot.style.pointerEvents = 'none';
+        dot.style.background = `hsl(${Math.round(Math.random()*360)} 70% 60%)`;
+        dot.style.opacity = '0.95';
+        dot.style.transform = 'translate(0,0)';
+        dot.style.transition = 'transform 900ms cubic-bezier(.2,.9,.3,1), opacity 900ms linear';
+        area.appendChild(dot);
+        requestAnimationFrame(() => {
+          const dx = (Math.random()-0.5)*220;
+          const dy = -120 - Math.random()*120;
+          dot.style.transform = `translate(${dx}px, ${dy}px)`;
+          dot.style.opacity = '0';
+          setTimeout(()=>dot.remove(),1100);
+        });
+      }
+
+      setTimeout(()=>{
+        yesBtn.innerText = 'Forgiven ✔️';
+        yesBtn.style.background = 'linear-gradient(90deg,#7c3aed,#06b6d4)';
+      },900);
+
+    });
+
+    // Make sure "no" starts in a visible spot
+    window.addEventListener('load', () => {
+      // reset any transform so measurements are consistent
+      noBtn.style.transform = 'translate(0,0)';
+      // tiny initial dodge so it isn't exactly next to yes
+      setTimeout(dodge, 300);
+    });
+
+    // keyboard accessibility: allow Tab and Enter to activate yes button
+    yesBtn.addEventListener('keyup', (e)=>{ if(e.key === 'Enter') yesBtn.click(); });
+
+  </script></body>
 </html>
