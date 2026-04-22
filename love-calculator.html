@@ -1,144 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Love Calculator 💖</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>💖 Love Calculator · Rishabh & Kashu Magic 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: #0f172a;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 30% 10%, #0b1120, #030617);
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
 
-.card {
-    background: rgba(255,255,255,0.05);
-    padding: 30px;
-    border-radius: 20px;
-    width: 350px;
-    text-align: center;
-}
+        /* floating sparkles */
+        .sparkle {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 10px;
-    border: none;
-}
+        .spark {
+            position: absolute;
+            font-size: 0.9rem;
+            opacity: 0.2;
+            animation: floatSpark 10s linear infinite;
+            color: #ffb7c5;
+        }
 
-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    background: #22c55e;
-    color: white;
-    cursor: pointer;
-}
+        @keyframes floatSpark {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.5; }
+            80% { opacity: 0.3; }
+            100% { transform: translateY(-20vh) rotate(20deg); opacity: 0; }
+        }
 
-.result {
-    margin-top: 20px;
-    font-size: 18px;
-}
-</style>
+        .calculator-card {
+            position: relative;
+            z-index: 10;
+            max-width: 550px;
+            width: 100%;
+            background: rgba(15, 25, 45, 0.75);
+            backdrop-filter: blur(18px);
+            border-radius: 64px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 120, 160, 0.3);
+            padding: 2rem 2rem 2.2rem;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .calculator-card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(255, 140, 180, 0.4);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFB7C5, #FF85A1, #FF6B8E);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .sub {
+            color: #FFC2D0;
+            font-size: 0.85rem;
+            margin-bottom: 1.8rem;
+            border-bottom: 1px dashed rgba(255,200,210,0.3);
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+
+        .input-group {
+            margin: 1.5rem 0;
+        }
+
+        .input-group input {
+            width: 85%;
+            padding: 14px 20px;
+            border-radius: 60px;
+            border: none;
+            background: rgba(255,255,255,0.12);
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            outline: none;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            background: rgba(255,255,255,0.22);
+            box-shadow: 0 0 0 2px #FF6B8E;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(95deg, #FF6B8E, #FFB347);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 60px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 12px 0 8px;
+            width: 80%;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        }
+
+        .calculate-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(255,107,142,0.5);
+        }
+
+        .result-box {
+            background: rgba(0,0,0,0.45);
+            border-radius: 48px;
+            padding: 24px 16px;
+            margin-top: 28px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 1.4;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,200,180,0.2);
+        }
+
+        .result-percent {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #FFD966, #FFB347);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .footer-note {
+            margin-top: 1.8rem;
+            font-size: 0.7rem;
+            opacity: 0.7;
+            color: #FFC2D0;
+        }
+
+        @media (max-width: 500px) {
+            .calculator-card { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .result-percent { font-size: 2.5rem; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
+<div class="sparkle" id="sparkleContainer"></div>
 
-<div class="card">
-    <h2>💖 Love Calculator 💖</h2>
+<div class="calculator-card">
+    <h1>💖 Love Calculator 💖</h1>
+    <div class="sub">🔮 discover your cosmic connection 🔮</div>
 
-    <input id="name1" placeholder="Your Name">
-    <input id="name2" placeholder="Partner Name">
+    <div class="input-group">
+        <input type="text" id="name1" placeholder="Your Name" autocomplete="off">
+    </div>
+    <div class="input-group">
+        <input type="text" id="name2" placeholder="Partner Name" autocomplete="off">
+    </div>
 
-    <button onclick="calculate()">Calculate ❤️</button>
+    <button class="calculate-btn" onclick="calculateLove()">Calculate ❤️ Match</button>
 
-    <div class="result" id="result"></div>
+    <div class="result-box" id="loveResult">
+        ✨ Enter two names & feel the magic ✨
+    </div>
+    
 </div>
 
 <script>
-
-// Normalize
-function normalize(name) {
-    return name.toLowerCase().trim();
-}
-
-// Kashu names
-function isKashu(name) {
-    return [
-        "kashvi",
-        "kashu",
-        "kashvi singh",
-        "kashu singh"
-    ].includes(name);
-}
-
-// Rishabh names
-function isRishabh(name) {
-    return [
-        "rishabh",
-        "rishabh sharma"
-    ].includes(name);
-}
-
-// 🔒 Stable hash (same input = same output)
-function getStablePercent(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    function normalize(str) {
+        return str.toLowerCase().trim();
     }
-    return Math.abs(hash);
-}
 
-function calculate() {
-    let n1 = normalize(document.getElementById("name1").value);
-    let n2 = normalize(document.getElementById("name2").value);
+    function isKashu(name) {
+        const kashuNames = ["kashvi", "kashu", "kashvi singh", "kashu singh"];
+        return kashuNames.includes(name);
+    }
 
-    let resultBox = document.getElementById("result");
+    function isRishabh(name) {
+        const rishabhNames = ["rishabh", "rishabh sharma"];
+        return rishabhNames.includes(name);
+    }
 
-    let combo = n1 + "|" + n2;
+    function getStableHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return Math.abs(hash);
+    }
 
-    // 💯 ONLY YOU TWO
-    if (
-        (isKashu(n1) && isRishabh(n2)) ||
-        (isKashu(n2) && isRishabh(n1))
-    ) {
-        resultBox.innerHTML = `
-            💯 100% Love Match 💖<br><br>
-            He is only yours ❤️<br>
-            He loves you so much Kashvi 💞
+    function calculateLove() {
+        let name1Raw = document.getElementById("name1").value;
+        let name2Raw = document.getElementById("name2").value;
+        let n1 = normalize(name1Raw);
+        let n2 = normalize(name2Raw);
+        let resultDiv = document.getElementById("loveResult");
+
+        if (n1 === "" || n2 === "") {
+            resultDiv.innerHTML = `<div style="font-size:1.2rem;">💔 Please enter both names 💔</div>`;
+            return;
+        }
+
+        // SPECIAL: Rishabh & Kashu (any order) = 100% eternal
+        if ((isKashu(n1) && isRishabh(n2)) || (isKashu(n2) && isRishabh(n1))) {
+            resultDiv.innerHTML = `
+                <div class="result-percent">💯 100% 💯</div>
+                <div style="margin-top: 12px; font-size:1.2rem;">✨ Eternal Love Match ✨</div>
+                <div style="margin-top: 8px; color:#FFB7C5;">He is only yours, Kashvi 💖<br>Rishabh ❤️ Kashu — destined forever</div>
+            `;
+            return;
+        }
+
+        // Kashu with anyone else → low 0-15%
+        if (isKashu(n1) || isKashu(n2)) {
+            let combo = n1 + "|" + n2;
+            let percent = getStableHash(combo) % 16;
+            resultDiv.innerHTML = `
+                <div style="font-size:2.5rem; font-weight:bold;">💔 ${percent}% Match 💔</div>
+                <div style="margin-top: 8px;">Not meant to be 🚫<br>True love belongs only to Rishabh 💘</div>
+            `;
+            return;
+        }
+
+        // All other couples: stable 0-100%
+        let comboStr = n1 + "|" + n2;
+        let lovePercent = getStableHash(comboStr) % 101;
+        let message = "";
+        if (lovePercent >= 90) message = "🔥 Soulmate energy! 🔥";
+        else if (lovePercent >= 70) message = "Strong connection 💖";
+        else if (lovePercent >= 45) message = "Good potential 💕";
+        else if (lovePercent >= 20) message = "Needs work 😏";
+        else message = "Maybe just friends? 🤷";
+
+        resultDiv.innerHTML = `
+            <div class="result-percent">💘 ${lovePercent}% 💘</div>
+            <div style="margin-top: 12px; font-size:1.1rem;">${message}</div>
+            <div style="margin-top: 8px; font-size:0.8rem;">❤️ keep nurturing love ❤️</div>
         `;
-        return;
     }
 
-    // 💀 Kashu + ANYONE ELSE
-    if (isKashu(n1) || isKashu(n2)) {
-        let base = getStablePercent(combo);
-        let percent = (base % 16); // 0–15 fixed
-
-        resultBox.innerHTML = `
-            💔 ${percent}% Match<br>
-            Not meant to be 🚫
-        `;
-        return;
+    // floating sparkles
+    function generateSparkles() {
+        const container = document.getElementById('sparkleContainer');
+        for (let i = 0; i < 40; i++) {
+            const spark = document.createElement('div');
+            spark.classList.add('spark');
+            spark.innerHTML = ['✨','💖','💕','🌸','⭐','💗'][Math.floor(Math.random()*6)];
+            spark.style.left = Math.random() * 100 + '%';
+            spark.style.animationDuration = 6 + Math.random() * 12 + 's';
+            spark.style.animationDelay = Math.random() * 15 + 's';
+            spark.style.fontSize = 0.7 + Math.random() * 1.4 + 'rem';
+            container.appendChild(spark);
+        }
     }
-
-    // 😏 Others (stable but normal range)
-    let base = getStablePercent(combo);
-    let percent = (base % 101);
-
-    resultBox.innerHTML = `
-        💘 ${percent}% Match<br>
-        ${percent > 70 ? "Strong connection 🔥" : "Needs work 😏"}
-    `;
-}
-
+    generateSparkles();
+    setInterval(() => {
+        const container = document.getElementById('sparkleContainer');
+        if (container.children.length < 55) {
+            const s = document.createElement('div');
+            s.classList.add('spark');
+            s.innerHTML = ['✨','💖','💗','🌟'][Math.floor(Math.random()*4)];
+            s.style.left = Math.random() * 100 + '%';
+            s.style.animationDuration = 5 + Math.random() * 12 + 's';
+            s.style.fontSize = 0.6 + Math.random() * 1.5 + 'rem';
+            container.appendChild(s);
+            setTimeout(() => s.remove(), 13000);
+        }
+    }, 4500);
 </script>
-
 </body>
 </html>
